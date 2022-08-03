@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title>도서</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+
+<nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
+
+  <ul class="nav nav-pills">
+
+    <% if(sess!=null) { %>
+      <li class="nav-item">
+        <a class="nav-link" href="/basket">장바구니</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/myPage/main/<%=sess%>">마이페이지</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/logout">로그아웃</a>
+      </li>
+
+      <% }else { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/signup">회원가입</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/signin">로그인</a>
+        </li>
+        <% }%>
+
+
+  </ul>
+</nav>
+
+<body>
+  <div>
+    <!-- 도서 목록 -->
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4">
+          <% for (var i=0; i < book_info.length; i++) { %>
+            <% if(i%5!=0) { %>
+
+              <div class="col" style="float: left;">
+                <div class="card">
+                  <a href="book/bookDetail/<%=book_info[i].book_uid%>">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225">
+                      <rect width="100%" height="100%" fill="#1215"></rect><text x="50%" y="50%" fill="#eceeef"
+                        dy=".3em">
+                        <%= book_info[i].book_name %>
+                      </text>
+                    </svg>
+                  </a>
+                  <div class="card-body">
+                    <p class="card-text">가격 : <%= book_info[i].book_stock %>
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <!-- <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">사기</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">담기</button>
+                      </div> -->
+                      <h2 class="text-muted">
+                        <%= book_info[i].book_price %> 원
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <%} else {%>
+                <div class="col" style="float: left;">
+                  <div class="card">
+                    <a href="book/bookDetail/<%=book_info[i].book_uid%>">
+                      <svg class="bd-placeholder-img card-img-top" width="100%" height="225">
+                        <rect width="100%" height="100%" fill="#1215"></rect><text x="50%" y="50%" fill="#eceeef"
+                          dy=".3em">
+                          <%= book_info[i].book_name %>
+                        </text>
+                      </svg>
+                    </a>
+                    <div class="card-body">
+                      <p class="card-text">가격 : <%= book_info[i].book_stock %>
+                      </p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <!-- <div class="btn-group">
+                          <button type="button" class="btn btn-sm btn-outline-secondary">사기</button>
+                          <button type="button" class="btn btn-sm btn-outline-secondary">담기</button>
+                        </div> -->
+                        <h2 class="text-muted">
+                          <%= book_info[i].book_price %> 원
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <% } %>
+
+                  <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
