@@ -43,10 +43,10 @@ exports.addBasket = async (basket_uid, basket_date, sess) => {
 
 }
 
-exports.addItem = async (basket_uid, book_uid) => {
+exports.addItem = async (basket_uid, book_uid, basket_book_amount) => {
 
     try {
-        let addItem = await db.query(basketQuery.addItem, [basket_uid, book_uid])
+        let addItem = await db.query(basketQuery.addItem, [basket_uid, book_uid, basket_book_amount])
         return addItem[0]
     }
 
