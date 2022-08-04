@@ -38,13 +38,23 @@ exports.basketPage = async (req, res) => {
         console.log(basket_uid);
         let item_info = await basketService.itemDetail(basket_uid)
         console.log(item_info);
+        var hap, sum = 0;
+        for (var i = 0; i < item_info.length; i++) {
+            hap = item_info[i].basket_book_amount * item_info[i].book_price
+            console.log(hap)
+            sum = sum + hap;
+
+        }
+        console.log("총", sum)
+
 
 
 
         return res.render('shopping/basket', {
             sess: sess,
             basket_info,
-            item_info
+            item_info,
+            sum
         })
     }
 

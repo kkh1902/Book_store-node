@@ -43,6 +43,7 @@ exports.signin = async (req, res) => {
         console.log(sess)
         if (signin[0].user_id == user_id && signin[0].user_password == user_password) {
             console.log(req.session)
+            
 
             // 로그인 성공
             req.session.isLogined = true;
