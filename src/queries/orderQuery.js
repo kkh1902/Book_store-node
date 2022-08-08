@@ -1,4 +1,4 @@
-exports.addOrder = 'insert into orders(order_uid, order_date, order_amount, card_com, card_uid, card_exp, destination_post, destination_addr, destination_detail, users_user_uid, point) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+exports.addOrder = 'insert into bookboard.order values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
 exports.addOrderList = 'insert into order_lists(orders_order_uid, books_book_uid, book_count) values(?, ?, ?)'
 exports.minusBookCount = 'update books set book_stock = (book_stock - ?) where book_uid = ?'
 exports.selectOrder = 'select * from orders where users_user_uid=? order by order_date'

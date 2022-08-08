@@ -110,15 +110,15 @@ exports.updateDest = async (
     }
 };
 
-// exports.destDetail = async (postnumber) => {
-//     try {
-//         let detail = await db.query(myPageQuery.destDetail, [postnumber]);
-//         return detail[0];
-//     } catch (error) {
-//         console.log(error);
-//         throw Error(error);
-//     }
-// };
+exports.destDetail = async (postnumber) => {
+    try {
+        let detail = await db.query(myPageQuery.destDetail, [postnumber]);
+        return detail[0];
+    } catch (error) {
+        console.log(error);
+        throw Error(error);
+    }
+};
 
 exports.deleteDest = async (postnumber) => {
     try {

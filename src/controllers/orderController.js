@@ -4,11 +4,40 @@ const myPageService = require('../services/myPageService')
 const userService = require('../services/userService')
 
 exports.order = async (req, res) => {
-    let sess = req.session.user_id
-    const { card } = req.body
-    console.log(card);
+    const { card_number,
+        postnumber,
+        book_name,
+        book_price,
+        amount,
+        sum } = req.body
+
 
     try {
+
+        let sess = req.session.user_id
+        let order_number = parseInt(Math.random() * 100)
+        let order_price = sum
+        order_date = new Date();
+        // 카드정보가져오기
+        let card_info = await myPageService.cardDetail(card_number);
+        console.log(card_info);
+        let card = card_info[0]
+        let card_type = card.card_type
+        let card_period = card.card_period
+
+        // 배송지 가져오기
+        let dest_info = await myPageService.destDetail(postnumber);
+        let dest = dest_info[0]
+
+        let basic_address = dest.basic_address
+        let general_address = dest.detail_address
+        console.log(general_address);
+
+        await orderService.addOrder(order_number, order_date, order_price, card_number, card_type, card_period, postnumber, basic_address, general_address, sess)
+
+
+
+
         return res.send(`<script type="text/javascript">
                 alert("주문이 완료되었습니다."); 
                 location.href='/';
@@ -92,12 +121,18 @@ exports.orderPage = async (req, res) => {
         let book_info = await bookService.bookDetail(book_uid)
         let card_info = await myPageService.cardList(sess)
         let dest_info = await myPageService.destList(sess)
+        var sum = 0;
+        sum = book_info[0].book_price * basket_book_amount
+        console.log(sum);
+
 
         return res.render('shopping/order', {
             sess: sess,
             book_info: book_info,
             card_info: card_info,
-            dest_info: dest_info
+            dest_info: dest_info,
+            amount: basket_book_amount,
+            sum: sum
         })
     }
 

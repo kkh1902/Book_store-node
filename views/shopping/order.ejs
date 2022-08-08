@@ -7,122 +7,96 @@
     <link rel="stylesheet" href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
 </head>
 
-<section style="background-color: #eee;">
-    <div class="container py-5">
-        <div class="card">
-            <div class="card-body">
-                <div class="row d-flex justify-content-center pb-5">
-                    <div class="col-md-7 col-xl-5 mb-4 mb-md-0">
-                        <div class="py-4 d-flex flex-row">
-                            <h5><span class="far fa-check-square pe-2"></span><b>결제</b> </h5>
+<form action="/order" method="POST">
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center pb-5">
+                        <div class="col-md-7 col-xl-5 mb-4 mb-md-0">
+                            <div class="py-4 d-flex flex-row">
+                                <h5><span class="far fa-check-square pe-2"></span><b>결제</b> </h5>
+                            </div>
+                            <div class="pt-2">
+                                <h4>카드 종류</h4>
+                                <!-- card -->
+                                <select class="form-select" name="card_number" aria-label="Default select example">
+                                    <option selected>카드를 선택하세요</option>
+                                    <% for(let card of card_info){ %>
+                                        <option value="<%= card.card_number %>">
+                                            <%= card.card_type%> : <%=card.card_number %>
+                                        </option>
+                                        <%}%>
+                                </select>
+                            </div>
+                            <hr />
+                            <div class="pt-2">
+                                <h4>배송지 종류</h4>
+                                <!-- dest -->
+                                <select class="form-select" name="postnumber" aria-label="Default select example">
+                                    <option selected>배송지를 선택하세요</option>
+                                    <% for(let dest of dest_info){ %>
+                                        <option value="<%= dest.postnumber %>">
+                                            <%= dest.basic_address%> - <%= dest.detail_address %>
+                                        </option>
+                                        <%}%>
+                                </select>
+                            </div>
                         </div>
-                        <div class="pt-2">
-                            <h4>카드 종류</h4>
-                            <form action="/order" method="post">
 
-                                <% for (let card of card_info) {%>
-                                    <div class="d-flex flex-row pb-3">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="card" id="card"
-                                                value="<%=card.card_number%>" aria-label="..." checked />
-                                        </div>
-                                        <div class="rounded border d-flex w-100 p-3 align-items-center">
-                                            <p class="mb-0">
-                                                <i class="fab fa-cc-visa fa-lg text-primary pe-2"></i>
-                                                <%=card.card_type%> :
-                                            </p>
-                                            <div class="ms-auto">
-                                                <%=card.card_number%>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <%}%>
-                                        <button type="submit" value="Proceed to payment"
-                                            class="btn btn-primary btn-block btn-lg">결제</button>
-                            </form>
-                        </div>
-                        <hr />
-                        <div class="pt-2">
-                            <h4>배송지 종류</h4>
-                            <form method="post">
-                                <% for (let dest of dest_info) {%>
-                                    <div class="d-flex flex-row pb-3">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="radioNoLabel"
-                                                id="radioNoLabel1" value="" aria-label="..." checked />
-                                        </div>
-                                        <div class="rounded border d-flex w-100 p-3 align-items-center">
-                                            <p class="mb-0">
-                                                <i class="fab fa-cc-visa fa-lg text-primary pe-2"></i>
-                                                <%=dest.basic_address%> - <%=dest.detail_address%> -
-                                            </p>
-                                            <div class="ms-auto">
-                                                <%=dest.postnumber%>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <%}%>
-                                        <input type="button" value="Proceed to payment"
-                                            class="btn btn-primary btn-block btn-lg" />
-                            </form>
-                        </div>
-                    </div>
+                        <div class="col-md-5 col-xl-4 offset-xl-1">
+                            <div class="rounded d-flex flex-column p-2" style="background-color: #f8f9fa;">
+                                <div class="p-2 me-3">
+                                    <h4>주문 목록</h4>
+                                </div>
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">책이름</th>
+                                                <th scope="col">가격</th>
+                                                <th scope="col">수량</th>
+                                            </tr>
+                                        </thead>
 
-                    <div class="col-md-5 col-xl-4 offset-xl-1">
-                        <div class="py-4 d-flex justify-content-end">
-                            <h6><a href="#!">Cancel and return to website</a></h6>
-                        </div>
-                        <div class="rounded d-flex flex-column p-2" style="background-color: #f8f9fa;">
-                            <div class="p-2 me-3">
-                                <h4>주문 목록</h4>
-                            </div>
-                            <!-- <div class="p-2 d-flex">
-                                <div class="col-8">Contracted Price</div>
-                                <div class="ms-auto">$186.76</div>
-                            </div>
-                            <div class="p-2 d-flex">
-                                <div class="col-8">Amount toward deductible</div>
-                                <div class="ms-auto">$0.00</div>
-                            </div>
-                            <div class="p-2 d-flex">
-                                <div class="col-8">Coinsurance( 0% )</div>
-                                <div class="ms-auto">+ $0.00</div>
-                            </div>
-                            <div class="p-2 d-flex">
-                                <div class="col-8">Copayment</div>
-                                <div class="ms-auto">+ $40.00</div>
-                            </div>
-                            <div class="border-top px-2 mx-2"></div>
-                            <div class="p-2 d-flex pt-3">
-                                <div class="col-8">Total Deductible, Coinsurance, and Copay</div>
-                                <div class="ms-auto">$40.00</div>
-                            </div>
-                            <div class="p-2 d-flex">
-                                <div class="col-8">
-                                    Maximum out-of-pocket on Insurance Policy (not reached)
+                                        <% for(let book of book_info){ %>
+                                            <tbody>
+                                                <th></th>
+                                                <td>
+                                                    <input type="text" id="book_name" name="book_name"
+                                                        style="border: none" onfocus="javascript:blur();"
+                                                        value="<%=book.book_name%>">
+                                                </td>
+                                                <td>
+                                                    <input type="number" id="book_price" name="book_price"
+                                                        style="border: none" onfocus="javascript:blur();"
+                                                        value="<%=book.book_price%>">
+                                                </td>
+                                                <td>
+                                                    <input type="number" id="amount" name="amount" style="border: none"
+                                                        onfocus="javascript:blur();" value="<%=amount%>">
+                                                </td>
+                                                <%}%>
+                                            </tbody>
+
+                                    </table>
                                 </div>
-                                <div class="ms-auto">$6500.00</div>
-                            </div>
-                            <div class="border-top px-2 mx-2"></div>
-                            <div class="p-2 d-flex pt-3">
-                                <div class="col-8">Insurance Responsibility</div>
-                                <div class="ms-auto"><b>$71.76</b></div>
-                            </div>
-                            <div class="p-2 d-flex">
-                                <div class="col-8">
-                                    Patient Balance <span class="fa fa-question-circle text-dark"></span>
+                                <div class="p-2 d-flex pt-3">
+                                    <div class="col-8"><b>Total</b></div>
+                                    <div class="ms-auto"><b class="text-success">
+                                            <input type="number" id="sum" name="sum" style="border: none"
+                                                onfocus="javascript:blur();" value="<%=sum%>">
+                                            <h3>원</h3>
+                                        </b></div>
                                 </div>
-                                <div class="ms-auto"><b>$71.76</b></div>
+
                             </div>
-                            <div class="border-top px-2 mx-2"></div> -->
-                            <div class="p-2 d-flex pt-3">
-                                <div class="col-8"><b>Total</b></div>
-                                <div class="ms-auto"><b class="text-success">총금액</b></div>
-                            </div>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">Proceed to payment</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
